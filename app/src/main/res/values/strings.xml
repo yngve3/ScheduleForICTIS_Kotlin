@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Расписание занятий</string>
+    <string name="message_block_text">Спи спокойно, дорогой товарищ, занятий сегодня нет</string>
+    <string name="tovarisch">TOVARISCH</string>
+    <string name="saveText">Сохранить</string>
+    <string name="numGroupAndTeacherText">Номер группы или имя преподавателя</string>
+    <string name="selectVPK">Выбрать ВПК</string>
+    
+    <string-array name="theme_list_titles">
+        <item>Темная</item>
+        <item>Светлая</item>
+        <item>Как в системе</item>
+    </string-array>
+
+    <string-array name="theme_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

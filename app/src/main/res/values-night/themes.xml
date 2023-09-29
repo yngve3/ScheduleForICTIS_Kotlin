@@ -1,0 +1,68 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ScheduleForICTIS2" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">#50BABABA</item>
+        <item name="android:windowLightStatusBar" >false</item>
+        <!-- Status bar color. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
+        <item name="android:navigationBarColor">@color/colorNavigationDark</item>
+
+        <item name="colorGray90">@color/colorGray10</item>
+        <item name="colorGray70">@color/colorGray40</item>
+        <item name="colorGray30">@color/colorGray80</item>
+        <item name="colorGray10">@color/colorGray90</item>
+
+        <item name="colorGray80">@color/colorGray20</item>
+        <item name="colorGray20">@color/colorGray80</item>
+
+        <item name="colorWhite">@color/black</item>
+        <item name="colorBlack">@color/white</item>
+
+        <item name="colorMain">@color/colorGray10</item>
+
+        <item name="textInputStyle">@style/Widget.SheduleForICTIS2.TextInputLayout</item>
+        <item name="materialButtonStyle">@style/Widget.SheduleForICTIS2.Button</item>
+        
+        <item name="windowSplashScreenBackground">?attr/colorWhite</item>
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+        <item name="bottomNavigationStyle"></item>
+    </style>
+
+    <style name="Widget.SheduleForICTIS2.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        
+    </style>
+
+    <style name="Preference.PreferenceScreen">
+        <item name="backgroundColor">?attr/colorWhite</item>
+    </style>
+
+    <style name="Widget.SheduleForICTIS2.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">?attr/colorGray10</item>
+        <item name="android:textColorHint">?attr/colorGray90</item>
+        <item name="endIconTint">?attr/colorGray90</item>
+        <item name="boxCornerRadiusTopStart">@dimen/cornerRadius1</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/cornerRadius1</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/cornerRadius1</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/cornerRadius1</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+    </style>
+
+    <style name="Widget.SheduleForICTIS2.Button" parent="Widget.Material3.Button">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">?attr/colorGray10</item>
+        <item name="cornerRadius">@dimen/cornerRadius1</item>
+        <item name="backgroundTint">?attr/colorGray90</item>
+        <item name="rippleColor">?attr/colorGray20</item>
+    </style>
+
+</resources>

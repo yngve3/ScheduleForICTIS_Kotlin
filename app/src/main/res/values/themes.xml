@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ScheduleForICTIS2" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">#50CDCDCD</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Status bar color. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
+        <item name="android:navigationBarColor">@color/colorNavigationLight</item>
+
+        <item name="colorGray90">@color/colorGray90</item>
+        <item name="colorGray80">@color/colorGray80</item>
+        <item name="colorGray70">@color/colorGray70</item>
+        <item name="colorGray30">@color/colorGray30</item>
+        <item name="colorGray20">@color/colorGray20</item>
+        <item name="colorGray10">@color/colorGray10</item>
+
+        <item name="colorWhite">@color/white</item>
+        <item name="colorBlack">@color/black</item>
+        <item name="colorMain">@color/colorMain</item>
+    </style>
+
+    <style name="Theme.ScheduleForICTIS2" parent="Base.Theme.ScheduleForICTIS2" />
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Base.Theme.ScheduleForICTIS2" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorAccent">@color/colorMain</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorGray30</item>
+        <item name="colorControlNormal">@color/colorGray30</item>
+        <item name="colorControlHighlight">#50BABABA</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- Status bar color. -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:statusBarColor">@color/colorTransparent</item>
+        <item name="android:navigationBarColor">@color/colorNavigationDark</item>
+
+        <item name="colorGray90">@color/colorGray10</item>
+        <item name="colorGray70">@color/colorGray40</item>
+        <item name="colorGray30">@color/colorGray80</item>
+        <item name="colorGray10">@color/colorGray90</item>
+
+        <item name="colorGray80">@color/colorGray20</item>
+        <item name="colorGray20">@color/colorGray80</item>
+
+        <item name="colorWhite">@color/black</item>
+        <item name="colorBlack">@color/white</item>
+
+        <item name="colorMain">@color/colorGray10</item>
+
+        <item name="textInputStyle">@style/Widget.SheduleForICTIS2.TextInputLayout</item>
+        <item name="materialButtonStyle">@style/Widget.SheduleForICTIS2.Button</item>
+
+        <item name="windowSplashScreenBackground">?attr/colorWhite</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_splashscreen_branding_centered</item>
+    </style>
+</resources>

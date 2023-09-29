@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cornerRadius1">8dp</dimen>
+
+    <dimen name="marginHor">30dp</dimen>
+    <dimen name="marginTopLabel">130dp</dimen>
+    <dimen name="marginVerB">60dp</dimen>
+    <dimen name="marginVerS">30dp</dimen>
+    <dimen name="marginVerSRecycler">20dp</dimen>
+    <dimen name="paddingVerSRecycler">10dp</dimen>
+
+    <dimen name="textSize1">20sp</dimen>
+    <dimen name="textSize2">16sp</dimen>
+    <dimen name="textSizeLabels">30sp</dimen>
+</resources>

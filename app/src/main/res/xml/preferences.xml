@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:title="Украшательства"
+        app:key="appearance_category"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            app:key="theme_pref"
+            app:title="Тема"
+            app:entries="@array/theme_list_titles"
+            app:entryValues="@array/theme_list_values"
+            app:dialogTitle="Выберете тему приложения"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Расписание"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            app:title="Учебная группа"
+            app:summary="Выберете учебную группу, расписание которой будет отображатся"
+            app:iconSpaceReserved="false"
+            app:key="pref_group_selection"/>
+
+        <Preference
+            app:title="ВПК"
+            app:summary="Выберете ВПК, расписание которого будет отображатся вместе с основным"
+            app:iconSpaceReserved="false"
+            app:key="pref_vpk_selection"/>
+    </PreferenceCategory>
+</PreferenceScreen>

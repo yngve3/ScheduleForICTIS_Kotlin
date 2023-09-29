@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/scheduleScreen">
+
+    <fragment
+        android:id="@+id/scheduleScreen"
+        android:name="com.example.scheduleforictis2.ui.schedule.ScheduleFragment"
+        android:label="ScheduleFragment" >
+        <action
+            android:id="@+id/action_scheduleScreen_to_groupSelectionScreen_VPK"
+            app:destination="@id/groupSelectionScreen" >
+            <argument
+                android:name="isVPK"
+                android:defaultValue="true" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/settingsScreen"
+        android:name="com.example.scheduleforictis2.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsScreen_to_groupSelectionFragment_VPK"
+            app:destination="@id/groupSelectionScreen" >
+            <argument
+                android:name="isVPK"
+                android:defaultValue="true" />
+        </action>
+        <action
+            android:id="@+id/action_settingsScreen_to_groupSelectionFragment_Group"
+            app:destination="@id/groupSelectionScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/groupSelectionScreen"
+        android:name="com.example.scheduleforictis2.ui.group_selection.GroupSelectionFragment"
+        android:label="GroupSelectionFragment" >
+        <argument
+            android:name="isFirst"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="isVPK"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+</navigation>
