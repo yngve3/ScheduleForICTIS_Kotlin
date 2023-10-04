@@ -1,5 +1,5 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@drawable/yngve"
+        android:drawable="@drawable/ic_splash_branding_image"
         android:gravity="center" />
 </layer-list>

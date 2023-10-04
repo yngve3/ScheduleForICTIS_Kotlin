@@ -3,11 +3,11 @@
     <item
         android:id="@id/scheduleScreen"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_today"
-        android:title="Расписание" />
+        android:icon="@drawable/item_bottom_nav_schedule"
+        android:title="@string/item_bottom_nav_schedule" />
     <item
         android:id="@id/settingsScreen"
         android:enabled="true"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Настройки"/>
+        android:icon="@drawable/item_bottom_nav_settings"
+        android:title="@string/item_bottom_nav_settings"/>
 </menu>

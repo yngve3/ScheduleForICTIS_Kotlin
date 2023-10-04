@@ -5,7 +5,9 @@
     <string name="saveText">Сохранить</string>
     <string name="numGroupAndTeacherText">Номер группы или имя преподавателя</string>
     <string name="selectVPK">Выбрать ВПК</string>
-    
+    <string name="item_bottom_nav_schedule">Расписание</string>
+    <string name="item_bottom_nav_settings">Настройки</string>
+
     <string-array name="theme_list_titles">
         <item>Темная</item>
         <item>Светлая</item>

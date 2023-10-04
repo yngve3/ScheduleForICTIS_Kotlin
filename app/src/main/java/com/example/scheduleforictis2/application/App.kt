@@ -37,14 +37,14 @@ class App: Application() {
         return if (id != null && name != null) Group(name, id) else null
     }
 
-    fun save(group: Group, isVPK: Boolean) {
+    fun save(group: Group?, isVPK: Boolean) {
 
         val name = if (isVPK) nameVpkVar else groupNameVar
         val id = if (isVPK) idVpkVar else groupIdVar
 
         getSharedPreferences(nameSharedPref, MODE_PRIVATE).edit()
-            .putString(name, group.name)
-            .putString(id, group.id)
+            .putString(name, group?.name)
+            .putString(id, group?.id)
             .apply()
     }
 

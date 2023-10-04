@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
-import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.example.scheduleforictis2.databinding.FragmentGroupSelectionBinding
 import com.example.scheduleforictis2.network.models.GroupApi
 import com.example.scheduleforictis2.ui.MainActivity
@@ -19,22 +18,15 @@ import com.example.scheduleforictis2.ui.MainViewModel
 import com.example.scheduleforictis2.utils.ParserModels.asGroup
 import com.example.scheduleforictis2.utils.ext.hideKeyboard
 import com.example.scheduleforictis2.utils.ext.showKeyboard
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 
 class GroupSelectionFragment: Fragment(), GroupAdapter.OnItemSelectedListener {
 
     companion object {
         private const val isVPKName = "isVPK"
         private const val isFirstName = "isFirst"
-
-        fun newInstance(isVPK: Boolean, isFirst: Boolean): Fragment {
-            val args = Bundle()
-            args.putBoolean(isVPKName, isVPK)
-            args.putBoolean(isFirstName, isFirst)
-
-            val fragment = GroupSelectionFragment()
-            fragment.arguments = args
-            return fragment
-        }
     }
 
     private lateinit var binding: FragmentGroupSelectionBinding
@@ -69,17 +61,16 @@ class GroupSelectionFragment: Fragment(), GroupAdapter.OnItemSelectedListener {
             binding.groupSelectionToolbar.title = "Выбор группы"
             with (binding.groupSelectionEtSearch) {
                 editText?.showKeyboard()
+                editText?.addTextChangedListener {
+                    viewModel.queryText = it.toString()
+                    if (binding.groupSelectionBtnSave.isEnabled) {
+                        binding.groupSelectionBtnSave.enable(false)
+                    }
+                }
                 editText?.setOnEditorActionListener { v, actionId, event ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                         binding.groupSelectionBtnSave.enable(false)
-                        viewModel.search(editText?.text.toString().trim()).observe(viewLifecycleOwner) {
-                            if (it != null) {
-                                adapter.updateItems(it)
-                            } else {
-                                Toast.makeText(requireContext(), "Нет таких", Toast.LENGTH_SHORT).show()
-                            }
-
-                        }
+                        viewModel.queryText = editText?.text.toString()
                     }
                     false
                 }
@@ -87,10 +78,13 @@ class GroupSelectionFragment: Fragment(), GroupAdapter.OnItemSelectedListener {
         }
 
         adapter = GroupAdapter(mutableListOf(), this@GroupSelectionFragment)
+        val flexBotLayoutManager = FlexboxLayoutManager(requireContext())
+        flexBotLayoutManager.flexDirection = FlexDirection.ROW
+        flexBotLayoutManager.justifyContent = JustifyContent.FLEX_START
 
         with(binding.rvGroupList) {
             adapter = this@GroupSelectionFragment.adapter
-            layoutManager = GridLayoutManager(requireContext(), 3)
+            layoutManager = flexBotLayoutManager
         }
 
         viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
@@ -126,11 +120,16 @@ class GroupSelectionFragment: Fragment(), GroupAdapter.OnItemSelectedListener {
     override fun onResume() {
         super.onResume()
 
-        if (isVPK) {
-            viewModel.search("ВПК").observe(viewLifecycleOwner) {
+        viewModel.filteredCategories().observe(viewLifecycleOwner) {
+            if (it != null) {
                 adapter.updateItems(it)
             }
+        }
+
+        if (isVPK) {
+            viewModel.queryText = "ВПК"
         } else {
+            viewModel.queryText = ""
             binding.groupSelectionEtSearch.requestFocus()
         }
     }

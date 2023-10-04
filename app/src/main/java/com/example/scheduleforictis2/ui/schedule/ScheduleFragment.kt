@@ -2,7 +2,6 @@ package com.example.scheduleforictis2.ui.schedule
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,12 +49,14 @@ class ScheduleFragment: Fragment() {
                 6
             )
 
+
             viewPager2.adapter = ViewPagerDaysOfWeekAdapter(childFragmentManager, lifecycle)
             viewPager2.reduceDragSensitivity(7)
+            viewPager2.offscreenPageLimit = 6
 
             horizontalOneRowCalendar = HorizontalOneRowCalendar(
-                R.layout.item_recycler_view_selected,
-                R.layout.item_recycler_view_unselected,
+                R.layout.item_calendar_selected,
+                R.layout.item_calendar_unselected,
                 horizontalCalendar,
                 viewPager2,
                 DateHelper,

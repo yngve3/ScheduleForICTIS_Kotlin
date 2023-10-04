@@ -13,7 +13,11 @@ class ViewPagerDaysOfWeekAdapter(fragmentManager: FragmentManager, lifecycle: Li
     }
 
     override fun getItemCount(): Int {
-        return 6
+        return weekDaysCount
+    }
+
+    companion object {
+        const val weekDaysCount = 6
     }
 
 }

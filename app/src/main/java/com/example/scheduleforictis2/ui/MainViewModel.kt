@@ -1,12 +1,10 @@
 package com.example.scheduleforictis2.ui
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.scheduleforictis2.application.App
 import com.example.scheduleforictis2.network.models.GroupApi
 import com.example.scheduleforictis2.repositories.ScheduleRepository
 import com.example.scheduleforictis2.ui.models.Group
@@ -17,7 +15,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -29,20 +26,13 @@ class MainViewModel: ViewModel() {
 
     val weekScheduleLiveData: MutableLiveData<WeekSchedule> = MutableLiveData()
     private lateinit var selectedWeekSchedule: WeekSchedule
-    private var vpk: Group?
 
     fun saveGroup(group: Group?, isVPK: Boolean = false) {
         if (isVPK) {
-            this.vpk = group
             User.vpk = group
         } else {
-            this.vpk = null
             User.group = group
         }
-    }
-
-    init {
-        vpk = App.instance!!.load(true)
     }
 
     fun changeWeekSchedule(groupID: String, offset: Int) {
@@ -58,8 +48,8 @@ class MainViewModel: ViewModel() {
                 }
 
                 //TODO Переделать
-                if (vpk != null) {
-                    ScheduleRepository.getGroupScheduleByIDAndWeek(vpk!!.id, weekNum).collect {
+                if (User.vpk != null) {
+                    ScheduleRepository.getGroupScheduleByIDAndWeek(User.vpk!!.id, weekNum).collect {
                         selectedWeekSchedule.setVPK(it)
                     }
                 }
@@ -71,6 +61,7 @@ class MainViewModel: ViewModel() {
         }
     }
 
+    //TODO Добавить состояния запросов
     private val query = MutableStateFlow("")
 
     var queryText: String
@@ -78,16 +69,13 @@ class MainViewModel: ViewModel() {
         set(value) { query.value = value }
 
     @OptIn(FlowPreview::class)
-    val filteredCategories = query
-        .debounce(500) // maybe bigger to avoid too many queries
+    fun filteredCategories() = query
+        .debounce(400)
         .distinctUntilChanged()
-        .map {
-            val criteria = it.lowercase()
-            test(criteria) // up to you to implement this depending on source
-        }
+        .map { search(it.lowercase().trim()) }
         .asLiveData()
 
-    suspend fun test(request: String): List<GroupApi> {
+    suspend fun search(request: String): List<GroupApi> {
         try {
             val response = ScheduleRepository.search(request)
             with (response.body()!!) {
@@ -107,30 +95,5 @@ class MainViewModel: ViewModel() {
         }
 
         return emptyList()
-    }
-
-
-    fun search(request: String): LiveData<List<GroupApi>> {
-        val result = MutableLiveData<List<GroupApi>>()
-        viewModelScope.launch {
-            try {
-                val response = ScheduleRepository.search(request)
-                with (response.body()!!) {
-                    if (groups != null) {
-                        result.postValue(groups)
-                    } else if (table != null) {
-                        result.postValue(listOf(GroupApi(table.group, "id", table.name)))
-                    } else result.postValue(groups)
-                }
-            } catch (e: HttpException) {
-                Log.e(TAG, e.message())
-            } catch (e: IOException) {
-                Log.e(TAG, e.message?: "Unknown error")
-            } catch (e: Exception) {
-                Log.e(TAG, e.message?: "Unknown error")
-            }
-        }
-
-        return result
     }
 }

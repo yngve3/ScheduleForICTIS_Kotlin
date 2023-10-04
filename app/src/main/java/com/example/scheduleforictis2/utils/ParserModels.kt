@@ -65,7 +65,8 @@ object ParserModels {
         }
     }
 
-    fun getID(weekNum: Int, groupID: String) = (weekNum.toString() + groupID.removeSuffix(".html")).toInt()
+    fun getID(weekNum: Int, groupID: String) = (weekNum.toString() + groupID.removeSuffix(".html").removeRange(0, 1)).toInt()
+
 
     private fun getCoupleFromStr(str: String, numOfCouple: Int): Couple {
         var temp = str

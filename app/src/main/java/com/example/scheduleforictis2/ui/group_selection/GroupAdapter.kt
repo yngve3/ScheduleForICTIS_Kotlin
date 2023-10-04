@@ -68,9 +68,9 @@ class GroupAdapter(private var groups: MutableList<GroupApi>, private val listen
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout: Int = if (viewType == UNSELECTED) {
-            R.layout.item_vpk_list_unselected
+            R.layout.item_group_selection_unselected
         } else {
-            R.layout.item_vpk_list_selected
+            R.layout.item_group_selection_selected
         }
         val v = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return ViewHolder(v)

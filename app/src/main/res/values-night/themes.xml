@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.ScheduleForICTIS2" parent="Theme.Material3.DayNight.NoActionBar">
 
@@ -30,18 +30,10 @@
 
         <item name="textInputStyle">@style/Widget.SheduleForICTIS2.TextInputLayout</item>
         <item name="materialButtonStyle">@style/Widget.SheduleForICTIS2.Button</item>
-        
-        <item name="windowSplashScreenBackground">?attr/colorWhite</item>
-        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
-        <item name="bottomNavigationStyle"></item>
     </style>
 
-    <style name="Widget.SheduleForICTIS2.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
-        
-    </style>
-
-    <style name="Preference.PreferenceScreen">
-        <item name="backgroundColor">?attr/colorWhite</item>
+    <style name="PreferenceTheme" parent="@style/Theme.Material3.DayNight.NoActionBar">
+        <item name="android:colorBackground">?attr/colorWhite</item>
     </style>
 
     <style name="Widget.SheduleForICTIS2.TextInputLayout" parent="Widget.Material3.TextInputLayout.FilledBox">
@@ -59,10 +51,10 @@
     <style name="Widget.SheduleForICTIS2.Button" parent="Widget.Material3.Button">
         <item name="textAllCaps">false</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:textColor">?attr/colorGray10</item>
+        <item name="android:textColor">?attr/colorGray90</item>
         <item name="cornerRadius">@dimen/cornerRadius1</item>
-        <item name="backgroundTint">?attr/colorGray90</item>
-        <item name="rippleColor">?attr/colorGray20</item>
+        <item name="backgroundTint">?attr/colorAccent</item>
+        <item name="rippleColor">?attr/colorGray70</item>
     </style>
 
 </resources>

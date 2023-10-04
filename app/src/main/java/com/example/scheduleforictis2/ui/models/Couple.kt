@@ -11,12 +11,12 @@ data class Couple(
     val isOnline: Boolean
 ) {
 
-    enum class KindOfCouple {
-        PRACTICE,
-        LABORATORY,
-        LECTURE,
-        EXAM,
-        UNDEFINED
+    enum class KindOfCouple(n: Int) {
+        PRACTICE(0),
+        LABORATORY(1),
+        LECTURE(2),
+        EXAM(3),
+        UNDEFINED(4)
     }
 
     fun getTimeStart(): String {

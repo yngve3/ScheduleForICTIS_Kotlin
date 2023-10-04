@@ -7,14 +7,14 @@ object User {
     val isAuthorized: Boolean
     var vpk: Group? = App.instance!!.load(true)
         set(value) {
-            value?.let { App.instance!!.save(it, true) }
+            App.instance!!.save(value, true)
             field = value
         }
 
     var group: Group? = App.instance!!.load(false)
         set(value) {
             this.vpk = null
-            value?.let { App.instance!!.save(it, false) }
+            App.instance!!.save(value, false)
             field = value
         }
 

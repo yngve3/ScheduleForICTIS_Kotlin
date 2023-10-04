@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetBottom="36dp"
+    android:insetLeft="36dp"
+    android:insetRight="36dp"
+    android:insetTop="36dp">
+    <layer-list>
+        <item>
+            <shape android:shape="oval">
+                <solid android:color="@color/white" />
+            </shape>
+        </item>
+        <item
+            android:drawable="@drawable/sfedu"
+            android:gravity="center"
+            android:width="64dp"
+            android:height="64dp"/>
+    </layer-list>
+</inset>

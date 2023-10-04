@@ -32,8 +32,7 @@
         <item name="textInputStyle">@style/Widget.SheduleForICTIS2.TextInputLayout</item>
         <item name="materialButtonStyle">@style/Widget.SheduleForICTIS2.Button</item>
 
-        <item name="windowSplashScreenBackground">?attr/colorWhite</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
-        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_splashscreen_branding_centered</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_splash_branding_image_centered</item>
     </style>
 </resources>

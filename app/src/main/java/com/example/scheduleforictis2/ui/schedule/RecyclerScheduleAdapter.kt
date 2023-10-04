@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scheduleforictis2.R
@@ -29,6 +28,7 @@ class RecyclerScheduleAdapter(
         private val tvNameOfCouple: TextView
         private val tvAudience: TextView
         private val tvProfessor: TextView
+        private val tvKindOfCouple: TextView
         private val ivIndicator: View
 
         init {
@@ -38,7 +38,7 @@ class RecyclerScheduleAdapter(
             tvAudience = v.findViewById(R.id.tvAudience)
             tvProfessor = v.findViewById(R.id.tvProfessor)
             ivIndicator = v.findViewById(R.id.ivIndicator)
-
+            tvKindOfCouple = v.findViewById(R.id.tvKindOfCouple)
         }
 
         @SuppressLint("ResourceAsColor")
@@ -48,11 +48,19 @@ class RecyclerScheduleAdapter(
             tvNameOfCouple.text = couple.discipline
             tvAudience.text = couple.audience
             tvProfessor.text = couple.professor
-            if (couple.isOnline) {
-                ivIndicator.setBackgroundResource(R.drawable.item_couples_list_indicator_green)
-            } else {
-                ivIndicator.setBackgroundResource(R.drawable.item_couples_list_indicator_red)
-            }
+
+            ivIndicator.setBackgroundResource(
+                if (couple.isOnline) {
+                    R.drawable.item_couples_list_indicator_green
+                } else {
+                    R.drawable.item_couples_list_indicator_red
+                }
+            )
+
+            //TODO Брать из ресурсов
+            val kinds = arrayOf("ПР", "ЛАБ", "ЛЕК", "ЭКЗ", "")
+
+            tvKindOfCouple.text = kinds[couple.kind.ordinal]
 
             itemView.setOnClickListener { listener.onItemClick(couple) }
         }
