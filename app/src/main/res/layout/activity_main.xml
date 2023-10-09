@@ -30,6 +30,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:itemIconSize="28dp"
         app:itemIconTint="@color/item_bottom_nav_color"
-        app:itemRippleColor="?attr/colorWhite"/>
+        app:itemRippleColor="?attr/colorGray10"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

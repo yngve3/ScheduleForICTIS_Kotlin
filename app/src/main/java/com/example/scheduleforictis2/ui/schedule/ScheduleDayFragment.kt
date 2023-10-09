@@ -42,88 +42,28 @@ class ScheduleDayFragment: PageFragment(), RecyclerScheduleAdapter.OnItemClickLi
         return binding.root
     }
 
+    var daySchedule: DaySchedule? = null
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerScheduleAdapter = RecyclerScheduleAdapter(mutableListOf(), this, requireContext())
+        recyclerScheduleAdapter = RecyclerScheduleAdapter(this)
         binding.rvSchedule.layoutManager = LinearLayoutManager(context)
         binding.rvSchedule.adapter = recyclerScheduleAdapter
-
-        binding.btnSelectVPK.setOnClickListener {
-            findNavController().navigate(R.id.action_scheduleScreen_to_groupSelectionScreen_VPK)
-        }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.weekScheduleLiveData.observe(viewLifecycleOwner) {
-            val daySchedule = it.getDay(positionFragment)
-            initt(daySchedule)
-            recyclerScheduleAdapter!!.updateCouples(daySchedule.couples)
-        }
-    }
-
-    fun initt(daySchedule: DaySchedule) {
-        with(daySchedule) {
-            if (isBlank and !isWar and !isVPK) {
-                showTovarish()
-            } else if (isWar) {
-                showMother()
-            } else if (isVPK and !vpkIsChosen) {
-                showVPK()
-            } else if (vpkIsChosen) {
-                showList()
-            } else if (!isVPK and !isBlank) {
-                showList()
-            }
-        }
-    }
-
-    private fun View.show(isVisible: Boolean) {
-        if (isVisible and (this.visibility == View.GONE)) {
-            this.visibility = View.VISIBLE
-        }
-        if (!isVisible and (this.visibility == View.VISIBLE)) {
-            this.visibility = View.GONE
-        }
-    }
-
-    private fun showTovarish() {
-        with(binding) {
-            btnSelectVPK.show(false)
-            rvSchedule.show(false)
-            ivMother.show(false)
-            tovarish.show(true)
-        }
-    }
-
-    private fun showMother() {
-        with(binding) {
-            btnSelectVPK.show(false)
-            rvSchedule.show(true)
-            tovarish.show(false)
-            ivMother.show(true)
-        }
-    }
-
-    private fun showList() {
-        with(binding) {
-            btnSelectVPK.show(false)
-            ivMother.show(false)
-            tovarish.show(false)
-            rvSchedule.show(true)
-        }
-    }
-
-    private fun showVPK() {
-        with(binding) {
-            rvSchedule.show(false)
-            ivMother.show(false)
-            tovarish.show(false)
-            btnSelectVPK.show(true)
+            daySchedule = it.getDay(positionFragment)
+            recyclerScheduleAdapter!!.updateCouples(daySchedule!!.couples)
         }
     }
 
     override fun onItemClick(couple: Couple?) {
 
+    }
+
+    override fun onSelectVPK() {
+        findNavController().navigate(R.id.action_scheduleScreen_to_groupSelectionScreen_VPK)
     }
 }

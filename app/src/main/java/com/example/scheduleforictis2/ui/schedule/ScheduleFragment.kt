@@ -49,6 +49,8 @@ class ScheduleFragment: Fragment() {
 
             calendar.addOnChangeListener(object: OneRowCalendar.OnChangeListener {
                 override fun onDayChange(newDay: Date?) {
+                    if (newDay.hashCode() != DateHelper.getCurrDate().hashCode()) btnToCurrDay.visibility = View.VISIBLE
+                    else btnToCurrDay.visibility = View.GONE
                     tvDateNow.text = DateHelper.dateToString(newDay?: DateHelper.getCurrDate())
                 }
 
@@ -60,6 +62,10 @@ class ScheduleFragment: Fragment() {
             })
 
             calendar.setCountWeek(viewModel.countWeeks)
+
+            btnToCurrDay.setOnClickListener {
+                calendar.toCurrentDay()
+            }
 
         }
     }

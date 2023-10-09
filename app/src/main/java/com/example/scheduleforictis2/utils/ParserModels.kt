@@ -6,6 +6,7 @@ import com.example.scheduleforictis2.ui.models.Couple
 import com.example.scheduleforictis2.ui.models.DaySchedule
 import com.example.scheduleforictis2.ui.models.Group
 import com.example.scheduleforictis2.ui.models.WeekSchedule
+import com.example.scheduleforictis2.ui.schedule.ScheduleItem
 import com.example.scheduleforictis2.ui.schedule.one_row_calendar.DateHelper
 
 object ParserModels {
@@ -34,9 +35,9 @@ object ParserModels {
             val dayOfMonth = date.split(",")[1].split(" ")[0].toInt()
             val month = DateHelper.getMonthNum(date.split(",")[1].split(" ")[1])
 
-            val couples = mutableListOf<Couple>()
-            var isWAR = false
+            val couples = mutableListOf<ScheduleItem>()
             var isVPK = false
+            var isMother = false
             for (coupleNum in 1..7) {
                 val couple = getCoupleFromStr(day[coupleNum], coupleNum)
                 if (couple.discipline.isNotEmpty()) {
@@ -44,14 +45,22 @@ object ParserModels {
                         isVPK = true
                         break
                     } else if (couple.discipline.contains("ВУЦ")) {
-                        isWAR = true
+                        isMother = true
                     } else {
-                        couples.add(couple)
+                        couples.add(ScheduleItem(couple))
                     }
                 }
             }
 
-            daySchedules.add(DaySchedule(weekdayNum, dayOfMonth, month, weekNum, couples, couples.isEmpty(), isWAR, isVPK))
+            if (couples.isEmpty() && !isMother) {
+                if (isVPK) couples.add(ScheduleItem(ScheduleItem.ScheduleItemType.ADD_VPK))
+                else couples.add(ScheduleItem(ScheduleItem.ScheduleItemType.TOVARISH))
+            } else {
+                if (isMother) couples.add(0, ScheduleItem(ScheduleItem.ScheduleItemType.MOTHER))
+            }
+
+
+            daySchedules.add(DaySchedule(weekdayNum, dayOfMonth, month, weekNum, couples))
         }
 
         return WeekSchedule(getID(weekNum, groupID), weekNum, groupID, daySchedules, this.weeks.size)
@@ -59,9 +68,11 @@ object ParserModels {
 
     fun WeekSchedule.setVPK(vpkSchedule: WeekSchedule) {
         for (day in this.days) {
-            if (day.isVPK and !day.vpkIsChosen) {
-                day.couples.addAll(vpkSchedule.getDay(day.weekdayNum - 1).couples)
-                day.vpkIsChosen = true
+            if (day.couples.isNotEmpty()) {
+                if (day.couples[0].type == ScheduleItem.ScheduleItemType.ADD_VPK) {
+                    day.couples.clear()
+                    day.couples.addAll(vpkSchedule.getDay(day.weekdayNum - 1).couples)
+                }
             }
         }
     }

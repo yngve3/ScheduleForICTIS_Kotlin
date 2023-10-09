@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,16 +14,17 @@ import com.example.scheduleforictis2.ui.models.Couple
 import com.example.scheduleforictis2.utils.DiffUtilCallback
 
 class RecyclerScheduleAdapter(
-    private var couples: MutableList<Couple>,
     private val listener: OnItemClickListener,
-    private val context: Context
-) : RecyclerView.Adapter<RecyclerScheduleAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(couple: Couple?)
+        fun onSelectVPK()
     }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    private val items = mutableListOf<ScheduleItem>()
+
+    class CoupleViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private val tvTimeStart: TextView
         private val tvTimeEnd: TextView
         private val tvNameOfCouple: TextView
@@ -42,7 +44,8 @@ class RecyclerScheduleAdapter(
         }
 
         @SuppressLint("ResourceAsColor")
-        fun bind(couple: Couple, listener: OnItemClickListener, context: Context) {
+        fun bind(scheduleItem: ScheduleItem, listener: OnItemClickListener) {
+            val couple = scheduleItem.couple!!
             tvTimeStart.text = couple.getTimeStart()
             tvTimeEnd.text = couple.getTimeEnd()
             tvNameOfCouple.text = couple.discipline
@@ -65,26 +68,75 @@ class RecyclerScheduleAdapter(
             itemView.setOnClickListener { listener.onItemClick(couple) }
         }
     }
+    class AddVpkViewHolder(v: View): RecyclerView.ViewHolder(v) {
+        private val btnSelectVPK: Button
+        init {
+            btnSelectVPK = v.findViewById(R.id.btnSelectVPK)
+        }
 
-    fun updateCouples(couples: List<Couple>) {
-        val callback = DiffUtilCallback(this.couples, couples)
+        fun bind(listener: OnItemClickListener) {
+            btnSelectVPK.setOnClickListener { listener.onSelectVPK() }
+        }
+    }
+    class MessageViewHolder(v: View): RecyclerView.ViewHolder(v)
+
+    fun updateCouples(couples: List<ScheduleItem>) {
+        val callback = DiffUtilCallback(this.items, couples)
         val result = DiffUtil.calculateDiff(callback)
         result.dispatchUpdatesTo(this)
-        this.couples.clear()
-        this.couples.addAll(couples)
+        this.items.clear()
+        this.items.addAll(couples)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_couples_list, parent, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        when (viewType) {
+            ScheduleItem.ScheduleItemType.COUPLE.ordinal -> {
+                return CoupleViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_couples_list_couple, parent, false)
+                )
+            }
+            ScheduleItem.ScheduleItemType.ADD_VPK.ordinal -> {
+                return AddVpkViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_couples_list_add_vpk, parent, false)
+                )
+            }
+            ScheduleItem.ScheduleItemType.TOVARISH.ordinal -> {
+                return MessageViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_couples_list_tovarish, parent, false)
+                )
+            }
+            ScheduleItem.ScheduleItemType.MOTHER.ordinal -> {
+                return MessageViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_couples_list_mother, parent, false)
+                )
+            }
+            else -> {
+                return MessageViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_couples_list_error, parent, false)
+                )
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(couples[position], listener, context)
+    override fun getItemViewType(position: Int): Int {
+        return items[position].type.ordinal
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is CoupleViewHolder) {
+            holder.bind(items[position], listener)
+        }
+        if (holder is AddVpkViewHolder) {
+            holder.bind(listener)
+        }
     }
 
     override fun getItemCount(): Int {
-        return couples.size
+        return items.size
     }
 }

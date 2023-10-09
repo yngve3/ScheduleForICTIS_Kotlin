@@ -65,10 +65,10 @@ object DateHelper {
         }
     }
 
-    enum class MonthDisplayMode(value: Int) {
-        GENITIVE_CASE(1),
-        NOMINATIVE_CASE(0),
-        THREE_CHAR(2)
+    enum class MonthDisplayMode {
+        NOMINATIVE_CASE,
+        GENITIVE_CASE,
+        THREE_CHAR
     }
 
     fun getMonthName(month: Int, mode: MonthDisplayMode): String {

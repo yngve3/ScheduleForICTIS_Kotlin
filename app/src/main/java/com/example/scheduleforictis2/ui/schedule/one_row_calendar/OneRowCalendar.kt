@@ -96,6 +96,13 @@ class OneRowCalendar(
         }
     }
 
+    fun toCurrentDay() {
+        oneRowAdapter.selectElement(currentDayPosition)
+        currentWeek = DateHelper.getCurrDate().weekNum
+        recyclerView.smoothScrollToPosition(currentWeekPosition)
+        this.listener?.onWeekChange(currentWeek)
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         if (currentWeek == -1) {
             initUI(null)
