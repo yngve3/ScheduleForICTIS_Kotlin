@@ -26,6 +26,7 @@ class MainViewModel: ViewModel() {
 
     val weekScheduleLiveData: MutableLiveData<WeekSchedule> = MutableLiveData()
     private lateinit var selectedWeekSchedule: WeekSchedule
+    var countWeeks: Int = 0
 
     fun saveGroup(group: Group?, isVPK: Boolean = false) {
         if (isVPK) {

@@ -1,4 +1,4 @@
-package com.example.scheduleforictis2.utils
+package com.example.scheduleforictis2.ui.schedule.one_row_calendar
 
 import androidx.recyclerview.widget.DiffUtil
 

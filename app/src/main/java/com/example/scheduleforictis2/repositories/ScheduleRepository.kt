@@ -17,12 +17,19 @@ object ScheduleRepository {
     private val apiHelperImpl = ApiHelperImpl(NetworkService.apiService)
 
     suspend fun getGroupScheduleByIDAndWeek(groupID: String, weekNum: Int): Flow<WeekSchedule> =
+//        flow {
+//            val responseApi = apiHelperImpl.getGroupScheduleByIDAndWeek(groupID, weekNum).body()
+//            val response = responseApi!!.asWeekSchedule()
+//            App.instance!!.databaseHelper!!.insert(response)
+//            emit(response)
+//        }.catch {
+//            emit(App.instance!!.databaseHelper!!.getWeekScheduleByGroupAndWeekNum(
+//                groupID,
+//                weekNum
+//            ).first())
+//        }
+
         flow {
-            val responseApi = apiHelperImpl.getGroupScheduleByIDAndWeek(groupID, weekNum).body()
-            val response = responseApi!!.asWeekSchedule()
-            App.instance!!.databaseHelper!!.insert(response)
-            emit(response)
-        }.catch {
             emit(App.instance!!.databaseHelper!!.getWeekScheduleByGroupAndWeekNum(
                 groupID,
                 weekNum

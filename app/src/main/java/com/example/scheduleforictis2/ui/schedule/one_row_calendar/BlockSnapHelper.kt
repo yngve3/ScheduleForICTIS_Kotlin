@@ -6,7 +6,12 @@ import android.view.View
 import android.view.animation.Interpolator
 import android.widget.Scroller
 import androidx.core.view.ViewCompat
-import androidx.recyclerview.widget.*
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 
 /**@param maxFlingBlocks Maxim blocks to move during most vigorous fling*/
 class SnapToBlock constructor(private val maxFlingBlocks: Int) : SnapHelper() {

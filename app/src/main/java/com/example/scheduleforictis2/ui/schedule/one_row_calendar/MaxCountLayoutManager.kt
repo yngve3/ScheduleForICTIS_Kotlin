@@ -9,7 +9,7 @@ class MaxCountLayoutManager(
     context: Context?,
     orientation: Int,
     reverseLayout: Boolean,
-    val itemsPerPage: Int
+    private val itemsPerPage: Int
 ) :
     LinearLayoutManager(context, orientation, reverseLayout) {
 
@@ -36,7 +36,7 @@ class MaxCountLayoutManager(
     }
 
     private val itemSize: Int
-        private get() {
+        get() {
             val pageSize = if (orientation == HORIZONTAL) width else height
             return Math.round(pageSize.toFloat() / itemsPerPage)
         }

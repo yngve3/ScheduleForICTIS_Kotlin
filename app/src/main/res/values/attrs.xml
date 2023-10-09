@@ -13,4 +13,10 @@
 
     <attr name="cornerRadius1" format="reference"/>
     <attr name="textSize1" format="reference"/>
+
+    <declare-styleable name="OneRowCalendar">
+        <attr name="layout_selected" format="reference"/>
+        <attr name="layout_unselected" format="reference"/>
+        <attr name="countWeeks" format="integer"/>
+    </declare-styleable>
 </resources>

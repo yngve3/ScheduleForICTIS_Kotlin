@@ -1,6 +1,5 @@
-package com.example.scheduleforictis2.utils
+package com.example.scheduleforictis2.ui.schedule.one_row_calendar
 
-import com.example.scheduleforictis2.ui.models.Date
 import java.time.LocalDate
 import java.time.temporal.ChronoField
 import java.time.temporal.ChronoUnit
@@ -33,7 +32,7 @@ object DateHelper {
     )
 
     //TODO Придумать как обновлять это свойство (смещение 1-ой учебной недели, относительно начала года)
-    private var offsetStartWeek = 34
+    var offsetStartWeek = 34
 
     fun getWeekdayNum(weekday: String): Int {
         return when (weekday.lowercase()) {
@@ -86,16 +85,11 @@ object DateHelper {
         return weekdays[weekday - 1][mode.ordinal]
     }
 
-    fun getCurrWeek(): Int {
-        return LocalDate.now()[ChronoField.ALIGNED_WEEK_OF_YEAR] - offsetStartWeek
-    }
-
-    fun getCurrDayOfWeek(): Int {
-        val dayOfWeek = LocalDate.now().dayOfWeek.value
-        return if (dayOfWeek == 7) {
-            1
+    fun getCurrDate(): Date {
+        return if (LocalDate.now().dayOfWeek.value == 7) {
+            Date(LocalDate.now().plusDays(1), offsetStartWeek)
         } else {
-            dayOfWeek
+            Date(LocalDate.now(), offsetStartWeek)
         }
     }
 
@@ -119,7 +113,7 @@ object DateHelper {
 
         return (0 until numOfDaysBetween)
             .asSequence()
-            .map { Date(startDate.plusDays(it)) }
+            .map { Date(startDate.plusDays(it), offsetStartWeek) }
             .filter { it.dayOfWeek != 7 }
             .toMutableList()
     }

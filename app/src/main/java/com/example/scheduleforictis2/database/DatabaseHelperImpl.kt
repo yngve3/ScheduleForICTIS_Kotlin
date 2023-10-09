@@ -14,5 +14,5 @@ class DatabaseHelperImpl(private val database: Database): DatabaseHelper {
 
 
     override fun getWeekScheduleByGroupAndWeekNum(groupID: String, weekNum: Int): Flow<WeekSchedule> =
-        database.weekScheduleDao().getWeekScheduleByGroupAndWeekNum(groupID, weekNum)
+        database.weekScheduleDao().getWeekScheduleByGroupAndWeekNum(ParserModels.getID(weekNum, groupID))
 }

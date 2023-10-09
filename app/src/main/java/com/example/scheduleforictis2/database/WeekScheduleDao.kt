@@ -20,4 +20,7 @@ interface WeekScheduleDao {
     @Query("SELECT * FROM week_schedule WHERE `groupID`=:groupID AND `weekNum`=:weekNum")
     fun getWeekScheduleByGroupAndWeekNum(groupID: String, weekNum: Int): Flow<WeekSchedule>
 
+    @Query("SELECT * FROM week_schedule WHERE `id`=:scheduleID")
+    fun getWeekScheduleByGroupAndWeekNum(scheduleID: Int): Flow<WeekSchedule>
+
 }

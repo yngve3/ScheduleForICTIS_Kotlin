@@ -27,6 +27,7 @@ class MainFragment: Fragment() {
         binding.bottomNavBar.setupWithNavController(navController)
         binding.bottomNavBar.isItemActiveIndicatorEnabled = false
 
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.groupSelectionScreen -> binding.bottomNavBar.visibility = View.GONE

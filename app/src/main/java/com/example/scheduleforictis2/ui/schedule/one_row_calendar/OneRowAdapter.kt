@@ -8,15 +8,12 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scheduleforictis2.R
-import com.example.scheduleforictis2.ui.models.Date
-import com.example.scheduleforictis2.utils.DateHelper
-import com.example.scheduleforictis2.utils.DiffUtilCallback
 
-class RecyclerAdapter(
+class OneRowAdapter(
     private val items: MutableList<Date>,
     @LayoutRes private val selectedLayout: Int,
     @LayoutRes private val unselectedLayout: Int
-) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<OneRowAdapter.ViewHolder>() {
 
     fun interface OnItemSelectedListener {
         fun onSelect(date: Date?)
@@ -28,13 +25,39 @@ class RecyclerAdapter(
         this.listener = listener
     }
 
+    private val UNSELECTED = 0
+    private val SELECTED = 1
+
+    var currentElement: Int = -1
+        private set
+
     fun updateItems(items: List<Date>) {
-        items[currSelectPosition].isSelected = true
+        if (currentElement != -1) {
+            items[currentElement].isSelected = true
+        }
         val callback = DiffUtilCallback(this.items, items)
         val result = DiffUtil.calculateDiff(callback)
         result.dispatchUpdatesTo(this)
         this.items.clear()
         this.items.addAll(items)
+    }
+
+    fun selectElement(newPosition: Int) {
+        if (newPosition == currentElement) return
+        if (currentElement != -1) changeSelected(false)
+        currentElement = newPosition
+        changeSelected(true)
+
+        listener?.onSelect(items[currentElement])
+    }
+
+    fun selectElementWithOffset(offset: Int) {
+        selectElement(currentElement + offset)
+    }
+
+    private fun changeSelected(isSelected: Boolean) {
+        items[currentElement].isSelected = isSelected
+        notifyItemChanged(currentElement)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,38 +74,12 @@ class RecyclerAdapter(
         holder.bind(items[position], this::selectElement)
     }
 
-    private val UNSELECTED = 0
-    private val SELECTED = 1
-
     override fun getItemViewType(position: Int): Int {
         return if (items[position].isSelected) SELECTED else UNSELECTED
     }
 
-    var currSelectPosition = -1
-        private set
-
     override fun getItemCount(): Int {
         return items.size
-    }
-
-    fun selectElement(newPosition: Int) {
-        changeSelectedElement(newPosition)
-        listener!!.onSelect(items[newPosition])
-    }
-
-    fun scroll(offset: Int) {
-        changeSelectedElement(currSelectPosition + offset)
-        listener!!.onSelect(items[currSelectPosition])
-    }
-
-    private fun changeSelectedElement(newPosition: Int) {
-        if (currSelectPosition >= 0) {
-            items[currSelectPosition].isSelected = false
-            notifyItemChanged(currSelectPosition)
-        }
-        currSelectPosition = newPosition
-        items[currSelectPosition].isSelected = true
-        notifyItemChanged(currSelectPosition)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

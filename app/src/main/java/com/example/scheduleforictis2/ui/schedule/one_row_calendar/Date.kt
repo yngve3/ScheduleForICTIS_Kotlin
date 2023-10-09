@@ -1,9 +1,9 @@
-package com.example.scheduleforictis2.ui.models
+package com.example.scheduleforictis2.ui.schedule.one_row_calendar
 
 import java.time.LocalDate
 import java.time.temporal.ChronoField
 
-class Date(localDate: LocalDate) {
+class Date(localDate: LocalDate, offsetWeekNum: Int) {
     val dayOfWeek: Int
     val dayOfMonth: Int
     val month: Int
@@ -15,7 +15,7 @@ class Date(localDate: LocalDate) {
         dayOfMonth = localDate.dayOfMonth
         dayOfWeek = localDate.dayOfWeek.value
         month = localDate.month.value
-        weekNum = localDate[ChronoField.ALIGNED_WEEK_OF_YEAR]
+        weekNum = localDate[ChronoField.ALIGNED_WEEK_OF_YEAR] - offsetWeekNum
     }
 
     override fun hashCode(): Int {
