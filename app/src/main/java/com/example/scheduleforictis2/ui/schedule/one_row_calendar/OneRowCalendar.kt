@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
@@ -15,7 +14,6 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.scheduleforictis2.R
-import kotlinx.coroutines.supervisorScope
 
 class OneRowCalendar(
     context: Context,
@@ -55,7 +53,6 @@ class OneRowCalendar(
 
     fun addViewPagerAdapter(viewPagerDaysOfWeekAdapter: ViewPagerDaysOfWeekAdapter) {
         viewPager2.adapter = viewPagerDaysOfWeekAdapter
-        viewPager2.currentItem = DateHelper.getCurrDate().dayOfWeek - 1
     }
 
     fun addOnChangeListener(listener: OnChangeListener) {
@@ -103,6 +100,20 @@ class OneRowCalendar(
         this.listener?.onWeekChange(currentWeek)
     }
 
+    fun toNextWeekStart() {
+        if (currentWeek != countWeeks) {
+            scrollBlock(1)
+            changeCalendarPosition(0)
+        }
+    }
+
+    fun toPreviousWeekEnd() {
+        if (currentWeek != 1) {
+            scrollBlock(-1)
+            changeCalendarPosition(-1)
+        }
+    }
+
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
         if (currentWeek == -1) {
             initUI(null)
@@ -146,6 +157,31 @@ class OneRowCalendar(
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 changeCalendarPosition(position)
+            }
+
+            var isLast = false
+            var isFirst = false
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                if (position == 5 && positionOffset.toDouble() == 0.0) {
+                    if (!isLast) isLast = true
+                    else {
+                        toNextWeekStart()
+                    }
+                } else if (position == 0 && positionOffset.toDouble() == 0.0)  {
+                    if (!isFirst) isFirst = true
+                    else {
+                        toPreviousWeekEnd()
+                    }
+                } else {
+                    isFirst = false
+                    isLast = false
+                }
             }
         })
 
